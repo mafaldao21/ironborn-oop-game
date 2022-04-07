@@ -5,6 +5,8 @@ class Game {
         this.player = null;
         this.create = create;
         this.draw = draw;
+        this.time = 0;
+        this.obstacles = [];
     }
 
     start(){
@@ -13,16 +15,37 @@ class Game {
         this.player.domElement = this.create("player"); //create a dom element with the class "player"
         this.draw(this.player);
 
-        /*create and draw an obstacle*/
-        this.obstacle = new Obstacle;
-        this.obstacle.domElement = this.create("obstacle");
-        this.draw(this.obstacle);
-
+        //create and draw an obstacle
         // make obstacle move
         setInterval( () => {
-        this.obstacle.moveDown();
-        this.draw(this.obstacle);
+
+            //move obstacles
+            this.obstacles.forEach( (obstacle) => {
+                obstacle.moveDown();
+                this.draw(obstacle);
+                this.detectCollision(obstacle);
+            });
+        
+            //create obstacles
+            if(this.time % 30 === 0){
+                const newObstacle = new Obstacle;
+                newObstacle.domElement = this.create("obstacle"); 
+                this.obstacles.push(newObstacle); 
+            }
+
+            this.time++;
+
         }, 50);
+    }
+        
+    detectCollision(obstacle){
+        if(this.player.positionX < obstacle.positionX + obstacle.width &&
+            this.player.positionX + this.player.width > obstacle.positionX &&
+            this.player.positionY < obstacle.positionY + obstacle.height &&
+            this.player.height + this.player.positionY > obstacle.positionY) {
+                alert("game over my friend!")
+
+            }
     }
 
     movePlayer(direction){
@@ -41,6 +64,8 @@ class Player {
         this.positionX = 50;
         this.positionY = 0;
         this.domElement = null;
+        this.width = 10;
+        this.height = 10;
     }
 
     moveLeft() {
@@ -55,9 +80,11 @@ class Player {
 
 class Obstacle {
     constructor() {
-        this.positionX = 50;
+        this.positionX = Math.floor(Math.random()*90);
         this.positionY = 100;
-        this.domElement = null
+        this.domElement = null;
+        this.width = 10;
+        this.height = 10;
     }
 
     moveDown() {

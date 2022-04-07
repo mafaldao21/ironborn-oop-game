@@ -11,9 +11,12 @@ function createDomElement(className){
 }
 
 
-function drawDomElement(instance){    
-    instance.domElement.style.left = instance.positionX + "%";
-    instance.domElement.style.bottom = instance.positionY + "%";
+function drawDomElement(instance){ 
+    instance.domElement.style.width = instance.width + "vw";
+    instance.domElement.style.height = instance.height + "vh";
+
+    instance.domElement.style.left = instance.positionX + "vw";
+    instance.domElement.style.bottom = instance.positionY + "vh";
 }
 
 
