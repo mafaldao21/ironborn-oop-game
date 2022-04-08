@@ -24,6 +24,7 @@ class Game {
                 obstacle.moveDown();
                 this.draw(obstacle);
                 this.detectCollision(obstacle);
+                this.detectObstacleOutside(obstacle);
             });
         
             //create obstacles
@@ -46,6 +47,13 @@ class Game {
                 alert("game over my friend!")
 
             }
+    }
+
+    detectObstacleOutside(obstacle) {
+        if(obstacle.positionY < 0) {
+            this.obstacles.shift(obstacle);
+            obstacle.domElement.remove();
+        }
     }
 
     movePlayer(direction){
