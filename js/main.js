@@ -37,3 +37,17 @@ document.addEventListener("keydown", function(event){
     }
 });
 
+
+
+const music = new Audio('../Blackwell Academy.mp3');
+document.addEventListener("keydown", event => {
+    if(event.key === "ArrowRight" || event.key === "ArrowLeft") {
+        music.play();
+    } 
+});
+
+
+
+
+
+
